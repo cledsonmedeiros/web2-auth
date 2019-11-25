@@ -136,4 +136,10 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public static function findByLogin($login){
         return self::findOne(['login' => $login]);
     }
+
+    public function fields(){
+        $fields = parent::fields();
+        unset($fields['password']);
+        return $fields;
+    }
 }

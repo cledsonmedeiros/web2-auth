@@ -13,9 +13,9 @@ $config = [
     ],
     'components' => [
         'request' => [
-            // 'parsers' => [
-            //     'application/json' => 'yii\web\JsonParser',
-            // ],
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ],
             'cookieValidationKey' => 'xMiBnLjG8oYErtezEj0cjGUNcC4ZZIZl',
         ],
         'cache' => [
@@ -49,6 +49,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                ['class' => 'yii\rest\UrlRule', 'controller'=> 'user', 'pluralize' => false]
             ],
         ],
     ],

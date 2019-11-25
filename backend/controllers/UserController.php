@@ -5,10 +5,21 @@ namespace app\controllers;
 use Yii;
 use app\models\User;
 
-class UserController extends \yii\rest\Controller {
+class UserController extends \app\components\controllers\Controller {
+
+  public function verbs(){
+    $verbs = parent::verbs();
+    $verbs['login'] = ['POST', 'OPTIONS'];
+    return $verbs;
+    // return [
+    //   'login' => ['POST', 'OPTIONS'],
+    //   'create' => ['GET', 'OPTIONS'],
+    // ];
+  }
+
   public function actionLogin(){
-    $login = Yii::$app->requet->post('login');
-    $password = Yii::$app->requet->post('password');
+    $login = Yii::$app->request->post('login');
+    $password = Yii::$app->request->post('password');
     $user = User::findByLogin($login);
     if($user){
       if($user->validatePassword($password)){
@@ -22,14 +33,14 @@ class UserController extends \yii\rest\Controller {
     ];
   }
 
-  public function actionCreate($login, $password){
-    $user = new User();
-    $user->login = $login;
-    $user->password = $password;
-    $user->name = 'teste';
-    return [
-      'success' => $user->save(),
-      'errors' => $user->getErrors()
-    ];
-  }
+  // public function actionCreate($login, $password){
+  //   $user = new User();
+  //   $user->login = $login;
+  //   $user->password = $password;
+  //   $user->name = 'teste';
+  //   return [
+  //     'success' => $user->save(),
+  //     'errors' => $user->getErrors()
+  //   ];
+  // }
 }
