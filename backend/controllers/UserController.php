@@ -5,16 +5,22 @@ namespace app\controllers;
 use Yii;
 use app\models\User;
 
-class UserController extends \app\components\controllers\Controller {
+class UserController extends \app\components\controllers\ActiveController {
+
+  public $modelClass = 'app\models\User';
 
   public function verbs(){
     $verbs = parent::verbs();
     $verbs['login'] = ['POST', 'OPTIONS'];
     return $verbs;
-    // return [
-    //   'login' => ['POST', 'OPTIONS'],
-    //   'create' => ['GET', 'OPTIONS'],
-    // ];
+  }
+
+  public function behaviors() {
+    $behaviors = parent::behaviors();
+    $behaviors['authenticator']['except'] = [
+      'login'
+    ];
+    return $behaviors;
   }
 
   public function actionLogin(){

@@ -66,4 +66,13 @@ class Columns extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+    public function beforeSave($insert){
+        if(!Yii::$app->user->isGuest()){
+            $this->user_id = Yii::$app->user->identity->id;
+        }else{
+            return false;
+        }
+        return parent::beforeSave($insert);
+    }
 }
